@@ -1,0 +1,83 @@
+[
+  {
+    "model": "api.scenario",
+    "pk": 1,
+    "fields": {
+      "account_profile": "established",
+      "content_type": "image",
+      "claim_category": "environment_climate",
+      "fabrication_type": "ai_generated",
+      "deception_sophistication": "intermediate",
+      "image_url": "https://example.com/images/fake_flood.jpg",
+      "caption": "Devastating floods in downtown! The water level is rising fast. #ClimateCrisis",
+      "account_name": "Climate Watcher",
+      "handle": "@climatewatcher_real",
+      "follower_count": 15420,
+      "verified_badge": true,
+      "account_created_days_ago": 1250,
+      "account_history": {"total_posts": 450, "recent_activity_spike": true},
+      "domain_authority": {"score": 45, "trust_level": "medium"},
+      "image_metadata": {"camera": "AI Generator", "modified_date": "2023-10-12"},
+      "whois": {"registered_days_ago": 30, "registrar": "HiddenPrivacy"},
+      "cross_source": {"news_matches": 0, "fact_check_matches": 2},
+      "keyword_search": {"related_articles": 5, "debunked": true},
+      "correct_verdict": "fabricated",
+      "ground_truth_explanation": "The image is entirely AI-generated. There are tell-tale signs like distorted reflections in the water and structural impossibilities in the background buildings.",
+      "primary_verification_signal": "Image metadata indicates generation by AI software, and no other reputable news sources report flooding in that area."
+    }
+  },
+  {
+    "model": "api.scenario",
+    "pk": 2,
+    "fields": {
+      "account_profile": "new",
+      "content_type": "text_headline",
+      "claim_category": "health_science",
+      "fabrication_type": "invented_narrative",
+      "deception_sophistication": "novice",
+      "image_url": "https://example.com/images/stock_doctor.jpg",
+      "caption": "New study proves that drinking 5 liters of lemon water a day cures all ailments! Doctors are hiding this from you.",
+      "account_name": "Health Guru",
+      "handle": "@healthguru123",
+      "follower_count": 45,
+      "verified_badge": false,
+      "account_created_days_ago": 5,
+      "account_history": {"total_posts": 3, "recent_activity_spike": false},
+      "domain_authority": {"score": 10, "trust_level": "low"},
+      "image_metadata": {"camera": "Stock", "modified_date": "2018-05-10"},
+      "whois": {"registered_days_ago": 2, "registrar": "CheapDomains"},
+      "cross_source": {"news_matches": 0, "fact_check_matches": 5},
+      "keyword_search": {"related_articles": 0, "debunked": true},
+      "correct_verdict": "misleading",
+      "ground_truth_explanation": "This is a well-known health myth. While hydration is important, lemon water does not cure all ailments and excessive water intake can be dangerous.",
+      "primary_verification_signal": "No credible medical sources or scientific studies support this claim. Cross-referencing reveals it as a common debunked myth."
+    }
+  },
+  {
+    "model": "api.scenario",
+    "pk": 3,
+    "fields": {
+      "account_profile": "established",
+      "content_type": "video",
+      "claim_category": "politics_elections",
+      "fabrication_type": "authentic",
+      "deception_sophistication": "advanced",
+      "image_url": "https://example.com/images/press_conference.jpg",
+      "caption": "The Mayor announces the new city infrastructure budget plan for the upcoming year during today's press conference.",
+      "account_name": "City News Official",
+      "handle": "@citynews_official",
+      "follower_count": 125000,
+      "verified_badge": true,
+      "account_created_days_ago": 3650,
+      "account_history": {"total_posts": 15000, "recent_activity_spike": false},
+      "domain_authority": {"score": 85, "trust_level": "high"},
+      "image_metadata": {"camera": "Sony A7S III", "modified_date": "2023-11-05"},
+      "whois": {"registered_days_ago": 4000, "registrar": "EnterpriseDomains"},
+      "cross_source": {"news_matches": 25, "fact_check_matches": 0},
+      "keyword_search": {"related_articles": 50, "debunked": false},
+      "correct_verdict": "verified",
+      "ground_truth_explanation": "This is an authentic press conference. The statements match official transcripts and are corroborated by multiple major news outlets.",
+      "primary_verification_signal": "High domain authority, established verified account, and widespread corroboration from other reliable news sources."
+    }
+  }
+]
