@@ -16,10 +16,24 @@ class ScenarioAttemptViewSet(viewsets.ModelViewSet):
 
         self._apply_scoring(attempt)
 
+        room = attempt.room
+        room.phase = "verification"
+        room.save(update_fields=["phase"])
+
         return Response(
             ScenarioAttemptSerializer(attempt).data, 
             status=status.HTTP_201_CREATED
         )
+    def perform_update(self, serializer):
+        attempt = serializer.save()
+
+        # apply score
+        self._apply_scoring(attempt)
+
+        # transition to reveal
+        room = attempt.room
+        room.phase = "reveal"
+        room.save(update_fields=["phase"])
     
     def _apply_scoring(self, attempt):
         recommendation = attempt.recommendations.first()

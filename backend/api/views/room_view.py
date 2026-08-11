@@ -13,12 +13,21 @@ class RoomViewSet(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        room = serializer.save(room_code=generate_room_code())
+        
+        from ..models import Scenario
+        import random
+        scenarios = list(Scenario.objects.all())
+        scenario = random.choice(scenarios) if scenarios else None
+
+        room = serializer.save(
+            room_code=generate_room_code(), 
+            current_scenario=scenario,
+        ) 
 
         Player.objects.create(
-            room=room, 
-            name=request.data.get("name", "Player A"),
+            room=room,
             device_type="mobile",
+            name=request.data.get("name", "Player A"),
         )
 
         return Response(
@@ -49,6 +58,34 @@ class RoomViewSet(viewsets.ModelViewSet):
             PlayerSerializer(player).data,
             status=status.HTTP_200_OK
         )
+
+    @action(detail=True, methods=["post"])
+    def next_round(self, request, pk=None):
+        room = self.get_object()
+
+        from ..models import Scenario 
+
+        #get scenario IDs already played
+        played_ids = list(room.attempts.values_list("scenario_id", flat=True))
+
+        #get new scenario that hasn't been played yet
+        remaining = Scenario.objects.exclude(id__in=played_ids)
+        if not remaining.exists():
+            return Response({
+                "detail": "No scenarios left. Game over."
+            }, status=status.HTTP_400_BAD_REQUEST)
+
+        import random 
+
+        next_scenario = random.choice(list(remaining))
+
+        room.round_number += 1
+        room.current_scenario = next_scenario 
+        room.phase = "hold"
+        room.save(update_fields=["round_number", "current_scenario", "phase"])
+
+        return Response(RoomSerializer(room).data, status=status.HTTP_200_OK)
+            
 
 
     

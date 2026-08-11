@@ -18,7 +18,7 @@ class ScenarioAttempt(models.Model):
         "api.Scenario", on_delete=models.CASCADE, related_name="attempts"
     )
  
-    verdict_chosen = models.CharField(max_length=20, choices=VERDICT_CHOICES)
+    verdict_chosen = models.CharField(max_length=20, choices=VERDICT_CHOICES, null=True, blank=True)
     confidence = models.PositiveSmallIntegerField()  # 1-5
  
     # Description Checklist
@@ -47,7 +47,7 @@ class ScenarioAttempt(models.Model):
         unique_together = ("room", "scenario")
  
     def clean(self):
-        if isinstance(self.tools_used, list) and len(self.tools_used) < 2:
+        if self.verdict_chosen and isinstance(self.tools_used, list) and len(self.tools_used) < 2:
             raise ValidationError(
                 {"tools_used": "At least 2 tools must be used per attempt."}
             )

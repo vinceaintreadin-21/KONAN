@@ -15,5 +15,6 @@ class ScrollerScenarioSerializer(serializers.ModelSerializer):
             "account_name",
             "handle",
             "follower_count",
+            "following_count",
             "verified_badge",
         ]

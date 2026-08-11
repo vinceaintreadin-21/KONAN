@@ -70,7 +70,10 @@ class ScenarioAttemptSerializer(serializers.ModelSerializer):
 
         if unknown:
             raise serializers.ValidationError(f"Unknown tool keys: {sorted(unknown)}")
-        if len(value) < 2: 
+      
+        #enforce 2 toos minimum if a verict has been chosen
+        verdict_chosen = self.initial_data.get("verdict_chosen")
+        if verdict_chosen and len(value) < 2:
             raise serializers.ValidationError("At least 2 tools must be used.")
         return value
         

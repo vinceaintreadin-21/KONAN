@@ -17,6 +17,8 @@ class Scenario(models.Model):
     account_name = models.CharField(max_length=50)
     handle = models.CharField(max_length=50)
     follower_count = models.PositiveIntegerField()
+    following_count = models.PositiveIntegerField(default=0)
+    likes = models.PositiveIntegerField(default=0)
     verified_badge = models.BooleanField(default=False)
     account_created_days_ago = models.PositiveIntegerField()
 
