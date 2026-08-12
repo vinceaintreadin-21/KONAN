@@ -3,6 +3,8 @@ FROM python:3.12-slim AS builder
 
 WORKDIR /app
 
+ENV PYTHONUNBUFFERED=1
+
 # System deps for mysqlclient
 RUN apt-get update && apt-get install -y --no-install-recommends \
     default-libmysqlclient-dev \
@@ -34,6 +36,8 @@ COPY . .
 
 # Collect static files (Django admin, DRF browsable API)
 RUN python manage.py collectstatic --noinput
+
+RUN echo "Build-time ALLOWED_HOSTS: $ALLOWED_HOSTS"
 
 EXPOSE 8000
 
