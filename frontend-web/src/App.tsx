@@ -9,8 +9,12 @@ import { VerifierLobbyPage } from "./pages/verifier/VerifierLobbyPage";
 import { ScorePage } from "./pages/ScorePage";
 import { RevealPage } from "./pages/RevealPage";
 
+import { useRoomSocket } from "./hooks/useRoomSocket";
+
 export default function App() {
   const screen = useGameStore((s) => s.screen);
+
+  useRoomSocket();
 
   switch (screen) {
     case 'landing': return <LandingPage />
