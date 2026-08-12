@@ -31,6 +31,7 @@ DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
 
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost').split(',')
+print("DEBUG ALLOWED_HOSTS:", repr(ALLOWED_HOSTS))
 
 # Application definition
 
