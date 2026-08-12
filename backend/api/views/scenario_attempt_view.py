@@ -1,9 +1,24 @@
 from rest_framework import status, viewsets 
 from rest_framework.response import Response 
+from channels.layers import get_channel_layer
+from asgiref.sync import async_to_sync
 
 from ..models import ScenarioAttempt
 from ..scoring import compute_scoring 
 from ..serializers import ScenarioAttemptSerializer 
+
+def broadcast_room_update(room_id, event_name, payload):
+    channel_layer = get_channel_layer()
+    async_to_sync(channel_layer.group_send)(
+        f"room_{room_id}",
+        {
+             "type": "room_event",
+             "message": {
+                "event": event_name,
+                **payload,
+             }
+        }
+    )
 
 class ScenarioAttemptViewSet(viewsets.ModelViewSet):
     queryset = ScenarioAttempt.objects.all()
@@ -20,6 +35,14 @@ class ScenarioAttemptViewSet(viewsets.ModelViewSet):
         room.phase = "verification"
         room.save(update_fields=["phase"])
 
+        broadcast_room_update(
+            room_id=room.id,
+            event_name="phase_changed",
+            payload={
+                "phase": room.phase
+            }
+        )
+
         return Response(
             ScenarioAttemptSerializer(attempt).data, 
             status=status.HTTP_201_CREATED
@@ -34,6 +57,14 @@ class ScenarioAttemptViewSet(viewsets.ModelViewSet):
         room = attempt.room
         room.phase = "reveal"
         room.save(update_fields=["phase"])
+
+        broadcast_room_update(
+            room_id=room.id,
+            event_name="phase_changed",
+            payload={
+                "phase": room.phase
+            }
+        )
     
     def _apply_scoring(self, attempt):
         recommendation = attempt.recommendations.first()
