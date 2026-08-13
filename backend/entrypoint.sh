@@ -4,7 +4,7 @@ python manage.py shell -c "
 from api.models import Scenario
 if not Scenario.objects.exists():
     from django.core.management import call_command
-    call_command('loaddata', 'fake-data.scenarios.json')
+    call_command('loaddata', '/app/fake-data/scenarios.json')
     print('Seeded scenarios.')
 else:
     print('Scenarios already exist, skipping seed.')
